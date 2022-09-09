@@ -962,11 +962,11 @@ GameObject:
   - component: {fileID: 1012726433}
   - component: {fileID: 1012726432}
   - component: {fileID: 1012726435}
-  - component: {fileID: 1012726427}
   - component: {fileID: 1012726428}
   - component: {fileID: 1012726430}
   - component: {fileID: 1012726436}
   - component: {fileID: 1012726434}
+  - component: {fileID: 1012726427}
   - component: {fileID: 1012726431}
   m_Layer: 0
   m_Name: Player
@@ -1246,8 +1246,8 @@ MonoBehaviour:
     m_ActionName: Player/CancelGrapple[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1012726427}
-        m_TargetAssemblyTypeName: MemezawyDev.Player.Input.PlayerInputManager, Assembly-CSharp
+      - m_Target: {fileID: 131367747}
+        m_TargetAssemblyTypeName: MemezawyDev.Core.UIManager, Assembly-CSharp
         m_MethodName: HandlePause
         m_Mode: 0
         m_Arguments:
@@ -2491,7 +2491,7 @@ GameObject:
   - component: {fileID: 1650863293}
   - component: {fileID: 1650863292}
   m_Layer: 0
-  m_Name: ShitSpwaner
+  m_Name: SegmentManger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4de60fa2ebb32549a2112f0cdc20c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 1934768127520624937, guid: 550e3d9ecbe9be847a2f55c6bda4f022, type: 3}
+  _segment: {fileID: 0}
 --- !u!4 &1650863293
 Transform:
   m_ObjectHideFlags: 0

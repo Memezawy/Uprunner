@@ -17,7 +17,7 @@ namespace MemezawyDev.Player.Input
         }
         public static class ControleSchemes
         {
-            public static string[] Controller = { "JoyStick" , "Gamepad"};
+            public static string[] Controller = { "JoyStick", "Gamepad" };
             public static string KeyboadAndMouse = "KeyboadAndMouse";
         }
 
@@ -55,7 +55,7 @@ namespace MemezawyDev.Player.Input
             _movementInput = _playerControlls.Player.Move;
             _lookInput = _playerControlls.Player.Look;
             _playerInput = GetComponent<PlayerInput>();
-            
+
         }
         private void Update()
         {
@@ -156,6 +156,7 @@ namespace MemezawyDev.Player.Input
             {
                 Pause = InputSate.Ended;
             }
+            print(Pause.ToString());
         }
 
         #endregion
