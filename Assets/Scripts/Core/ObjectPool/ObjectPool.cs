@@ -5,27 +5,28 @@ namespace MemezawyDev.Core.ObjectPool
 {
     public class ObjectPool<T>
     {
-        private Queue<T> _q = new Queue<T>();
-        private Func<T> _createAction;
-        private Action<T> _getAction;
-        private Action<T> _returnAction;
-        private int _size;
+        private readonly Stack<T> _stack = new Stack<T>();
+        private readonly Func<T> _createAction;
+        private readonly Action<T> _getAction;
+        private readonly Action<T> _returnAction;
+        private int Size { get; }
 
         public ObjectPool(Func<T> createAction, Action<T> getAction, Action<T> returnAction, int maxSize)
         {
-            _size = maxSize;
+            Size = maxSize;
             _createAction = createAction;
             _getAction = getAction;
             _returnAction = returnAction;
-            for (int i = 0; i < _size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                _q.Enqueue(_createAction());
+                Return(_createAction());
             }
         }
 
         public T Get()
         {
-            T obj = _q.Dequeue();
+            if (_stack.Count == 0) return default;
+            T obj = _stack.Pop();
             _getAction?.Invoke(obj);
             return obj;
         }
@@ -33,7 +34,7 @@ namespace MemezawyDev.Core.ObjectPool
         public void Return(T obj)
         {
             _returnAction.Invoke(obj);
-            _q.Enqueue(obj);
+            _stack.Push(obj);
         }
     }
 }

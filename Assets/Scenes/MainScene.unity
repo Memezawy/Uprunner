@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4de60fa2ebb32549a2112f0cdc20c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _segment: {fileID: 0}
+  _segment: {fileID: 1934768127520624937, guid: 550e3d9ecbe9be847a2f55c6bda4f022, type: 3}
 --- !u!4 &1650863293
 Transform:
   m_ObjectHideFlags: 0
@@ -3393,7 +3393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480577292196314647, guid: 8319d0750a47da24b814357445128276, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8319d0750a47da24b814357445128276, type: 3}

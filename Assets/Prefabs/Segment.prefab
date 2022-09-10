@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1934768127520624938}
   - component: {fileID: 8914947751996264796}
+  - component: {fileID: 3483000562283320271}
   m_Layer: 0
   m_Name: Segment
   m_TagString: Segment
@@ -48,6 +49,32 @@ MonoBehaviour:
   _hangs: {fileID: 4635946381800067603, guid: 1d7358708c467634a8867430a4b018fe, type: 3}
   _count: 80
   _hangClearance: {x: 25, y: 25}
+--- !u!61 &3483000562283320271
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934768127520624937}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &1685193851364075162
 PrefabInstance:
   m_ObjectHideFlags: 0

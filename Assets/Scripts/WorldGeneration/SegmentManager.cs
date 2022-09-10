@@ -7,48 +7,99 @@ namespace MemezawyDev.WorldGeneration
     public class SegmentManager : MonoBehaviour
     {
         [SerializeField] private GameObject _segment;
-        private const float _distanceToDisable = 2f;
-        private readonly List<GameObject> _spwaned = new List<GameObject>();
+        private readonly List<Segment> _spwaned = new List<Segment>();
         private ObjectPool<Segment> _segmentsPool;
+        private bool _bActive = false;
+        private bool _AActive = false;
+
+        public static SegmentManager Instance { get; private set; }
+        public Segment CurrentSegment { get; set; }
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
+
         private void Start()
         {
-            LoadSegment();
             _segmentsPool = new ObjectPool<Segment>(() =>
             { return Instantiate(_segment).GetComponent<Segment>(); },
-                segment => { segment.gameObject.SetActive(true); },
-                segment => { segment.gameObject.SetActive(false); },
-                3);
-
+                segment =>
+                {
+                    segment.gameObject.SetActive(true);
+                    _spwaned.Add(segment);
+                },
+                segment =>
+                {
+                    segment.gameObject.SetActive(false);
+                    _spwaned.Remove(segment);
+                },
+                2);
+            var firstSegment = _segmentsPool.Get();
+            firstSegment.transform.position = new Vector2(0f, 0.5f * firstSegment.transform.lossyScale.y - 1f);
         }
         private void Update()
         {
-            if (Player.Player.Instance.transform.position.y >= _spwaned[_spwaned.Count - 1].transform.position.y) // when half way through the last segment.
+            // 3/4 the way done.
+            if (Player.Player.Instance.transform.position.y >= CurrentSegment.transform.position.y + 0.25f * CurrentSegment.transform.lossyScale.y)
             {
-                LoadSegment();
+                if (_AActive) return;
+                print("upper Part");
+                MoveAbove();
+                _AActive = true;
             }
-
-            // Check if the player is away enough then disable the segment to save preformance.
-            foreach (GameObject _segment in _spwaned)
+            else if (Player.Player.Instance.transform.position.y <= CurrentSegment.transform.position.y - 0.25f * CurrentSegment.transform.lossyScale.y)
             {
-                if (Vector2.Distance(_segment.transform.position, Player.Player.Instance.transform.position) >=
-                    _segment.transform.localScale.y * _distanceToDisable)
+                if (_bActive) return;
+                print("lower Part");
+                MoveBellow();
+                _bActive = true;
+            }
+            else
+            {
+                print("Mid Part");
+
+                foreach (var seg in _spwaned)
                 {
-                    _segment.SetActive(false);
+                    if (seg == CurrentSegment) continue;
+                    _segmentsPool.Return(seg);
                 }
-                else
-                {
-                    _segment.SetActive(true);
-                }
+                _AActive = false;
+                _bActive = false;
             }
         }
-
-        private void LoadSegment()
+        private void MoveBellow()
         {
-            GameObject seg = Instantiate(_segment);
-            // Y = (Leaves space enough so no segments collid) + (adds up the distance needed to be away from any segments)
-            seg.transform.position = new Vector2(0f,
-                0.5f * _segment.transform.localScale.y + _spwaned.Count * _segment.transform.localScale.y);
-            _spwaned.Add(seg);
+            var pos = new Vector2(0f, CurrentSegment.transform.position.y - _segment.transform.lossyScale.y);
+            if (ContainsSegment(pos)) return;
+            var segment = _segmentsPool.Get();
+            segment.transform.position = pos;
+        }
+        private void MoveAbove()
+        {
+            var pos = new Vector2(0f, CurrentSegment.transform.position.y + _segment.transform.lossyScale.y);
+            if (ContainsSegment(pos)) return;
+            var segment = _segmentsPool.Get();
+            segment.transform.position = pos;
+        }
+
+        private bool ContainsSegment(Vector3 pos)
+        {
+            foreach (var segment in _spwaned)
+            {
+                if (segment.transform.position == pos)
+                    return true;
+                else
+                    return false;
+            }
+            return false;
         }
     }
 }

@@ -66,12 +66,19 @@ namespace MemezawyDev.WorldGeneration
         private bool CheckAvilablity(Vector2 pos, Vector2 scale)
         {
             // Overlaps a Box if it hit anything then false else true.
-            var coliders = Physics2D.OverlapBox(pos, scale, 0f);
-            if (coliders == null) return true;
-            else
+            var coliders = Physics2D.OverlapBoxAll(pos, scale, 0f);
+            foreach (var collider in coliders)
             {
-                return false;    
+                if (collider.isTrigger) continue;
+                else return false;
             }
+            return true;
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!collision.CompareTag("Player")) return;
+            SegmentManager.Instance.CurrentSegment = this;
+            print("Player is in");
         }
     }
 }
