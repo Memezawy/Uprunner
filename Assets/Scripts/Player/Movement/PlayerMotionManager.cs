@@ -14,6 +14,7 @@ namespace MemezawyDev.Player.Movement
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _fallSpeed;
         [Range(0, 1)] [SerializeField] private float _earlyEndJumpModifier;
+        [SerializeField] private AudioClip _jumpSoundEffect;
         [Header("Dash")]
         [SerializeField] private AnimationCurve _dashCurve;
         [SerializeField] private float _dashDistance, _dashCoolDown, _dashForce;
@@ -115,6 +116,8 @@ namespace MemezawyDev.Player.Movement
             {
                 _physicsController.SetLinerDrag(0);
                 _physicsController.AddForce(0f, _jumpForce);
+                _player.AudioSource.clip = _jumpSoundEffect;
+                _player.AudioSource.Play();
             }
             if (_input.Jump == PlayerInputManager.InputSate.Ended &&
                 _physicsController.VelocityY > 0.1f) // Let go while in-air

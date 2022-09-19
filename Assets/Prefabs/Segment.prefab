@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hangs: {fileID: 4635946381800067603, guid: 1d7358708c467634a8867430a4b018fe, type: 3}
-  _count: 80
-  _hangClearance: {x: 25, y: 25}
+  _count: 40
+  _hangClearance: {x: 50, y: 50}
 --- !u!61 &3483000562283320271
 BoxCollider2D:
   m_ObjectHideFlags: 0

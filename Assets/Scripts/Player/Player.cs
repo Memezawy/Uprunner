@@ -7,12 +7,14 @@ namespace MemezawyDev.Player
     [RequireComponent(typeof(Input.PlayerInputManager))]
     [RequireComponent(typeof(Movement.PlayerMotionManager))]
     [RequireComponent(typeof(PhysicsController))]
+    [RequireComponent(typeof(AudioSource))]
     public class Player : MonoBehaviour
     {
         public Input.PlayerInputManager Input { get; private set; }
         public Movement.PlayerMotionManager Movement { get; private set; }
         public Shooting.PlayerShootingManager Shooting { get; private set; }
         public PhysicsController PhysicsController { get; private set; }
+        public AudioSource AudioSource { get; private set; }
         public static Player Instance { get; private set; }
 
 
@@ -31,6 +33,7 @@ namespace MemezawyDev.Player
             Movement = GetComponent<Movement.PlayerMotionManager>();
             Shooting = GetComponent<Shooting.PlayerShootingManager>();
             PhysicsController = GetComponent<PhysicsController>();
+            AudioSource = GetComponent<AudioSource>();
         }
     }
 }

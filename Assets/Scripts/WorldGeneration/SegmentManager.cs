@@ -51,21 +51,17 @@ namespace MemezawyDev.WorldGeneration
             if (Player.Player.Instance.transform.position.y >= CurrentSegment.transform.position.y + 0.25f * CurrentSegment.transform.lossyScale.y)
             {
                 if (_AActive) return;
-                print("upper Part");
                 MoveAbove();
                 _AActive = true;
             }
             else if (Player.Player.Instance.transform.position.y <= CurrentSegment.transform.position.y - 0.25f * CurrentSegment.transform.lossyScale.y)
             {
                 if (_bActive) return;
-                print("lower Part");
                 MoveBellow();
                 _bActive = true;
             }
             else
             {
-                print("Mid Part");
-
                 foreach (var seg in _spwaned)
                 {
                     if (seg == CurrentSegment) continue;

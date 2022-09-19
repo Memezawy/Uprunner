@@ -60,7 +60,7 @@ namespace MemezawyDev.WorldGeneration
         private void OnEnable()
         {
             // for when the segment is reactived when the player gets close
-            RefreshPlacements();
+            //RefreshPlacements();
         }
 
         private bool CheckAvilablity(Vector2 pos, Vector2 scale)
@@ -69,7 +69,11 @@ namespace MemezawyDev.WorldGeneration
             var coliders = Physics2D.OverlapBoxAll(pos, scale, 0f);
             foreach (var collider in coliders)
             {
-                if (collider.isTrigger) continue;
+                if (collider.isTrigger)
+                {
+                    print(collider.name);
+                    continue;
+                }
                 else return false;
             }
             return true;
@@ -78,7 +82,6 @@ namespace MemezawyDev.WorldGeneration
         {
             if (!collision.CompareTag("Player")) return;
             SegmentManager.Instance.CurrentSegment = this;
-            print("Player is in");
         }
     }
 }
