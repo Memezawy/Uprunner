@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MemezawyDev.WorldGeneration
@@ -7,21 +8,16 @@ namespace MemezawyDev.WorldGeneration
         [SerializeField] private GameObject _hangs;
         [SerializeField] private int _count;
         [SerializeField] private Vector2 _hangClearance;
-        private GameObject[] _spwaned;
+        private List<GameObject> _spwaned = new List<GameObject>();
 
         // Cached
         private Vector2 _pos;
-
-        private void Awake()
-        {
-            _spwaned = new GameObject[_count];
-        }
 
         private void Start()
         {
             for (int i = 0; i < _count; i++)
             {
-                _spwaned[i] = Instantiate(_hangs);
+                _spwaned.Add(Instantiate(_hangs));
                 Physics2D.SyncTransforms(); // Makes sure all the colliders are active so that CheckAvilablity() can work proberly.
                 _spwaned[i].transform.position = CalculatePos();
                 _spwaned[i].transform.parent = transform;
@@ -29,9 +25,10 @@ namespace MemezawyDev.WorldGeneration
         }
 
         // Relocates all the hangs
-        private void RefreshPlacements()
+        public void RefreshPlacements()
         {
-            if (_spwaned[0] == null) return; // if the 1st item is null exit to avoid a null exception
+            print("Relocated");
+            if (_spwaned.Count == 0) return; // if the 1st item is null exit to avoid a null exception
             foreach (var item in _spwaned)
             {
                 item.transform.position = CalculatePos();
@@ -57,21 +54,14 @@ namespace MemezawyDev.WorldGeneration
             }
         }
 
-        private void OnEnable()
-        {
-            // for when the segment is reactived when the player gets close
-            //RefreshPlacements();
-        }
-
         private bool CheckAvilablity(Vector2 pos, Vector2 scale)
         {
             // Overlaps a Box if it hit anything then false else true.
-            var coliders = Physics2D.OverlapBoxAll(pos, scale, 0f);
-            foreach (var collider in coliders)
+            var colliders = Physics2D.OverlapBoxAll(pos, scale, 0f);
+            foreach (var collider in colliders)
             {
                 if (collider.isTrigger)
                 {
-                    print(collider.name);
                     continue;
                 }
                 else return false;
@@ -82,6 +72,11 @@ namespace MemezawyDev.WorldGeneration
         {
             if (!collision.CompareTag("Player")) return;
             SegmentManager.Instance.CurrentSegment = this;
+        }
+
+        private void OnEnable()
+        {
+            RefreshPlacements();
         }
     }
 }
